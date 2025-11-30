@@ -25,6 +25,78 @@
         .hover-scale:hover {
             transform: scale(1.05);
         }
+        
+        /* Font Size Hierarchy */
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Hero Title */
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        
+        /* Section Titles */
+        h2 {
+            font-size: 2rem;
+            line-height: 1.3;
+        }
+        
+        /* Card Titles */
+        h3 {
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
+        
+        /* Small Titles */
+        h4 {
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        
+        /* Paragraph */
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Small Text */
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        /* Large Text */
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 2.25rem;
+            }
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -32,7 +104,7 @@
     <nav class="bg-white shadow-md fixed w-full top-0 z-50">
         <div class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <img src="logo 2.png" alt="Code Ta Logo" class="h-6 sm:h-8 md:h-10">
+                <img src="logo 2.png" alt="Code Ta Logo" class="h-5 sm:h-6 md:h-8">
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6">
@@ -43,11 +115,12 @@
                     <a href="#faq" class="text-gray-700 hover:text-blue-600 transition">FAQ</a>
                 </div>
                 
-                <!-- Desktop WhatsApp Button -->
-                <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" 
-                   class="hidden md:inline-block bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition">
-                    WhatsApp
-                </a>
+                <!-- Dark Mode Toggle -->
+                <button id="darkModeToggle" class="hidden md:inline-block p-2 rounded-full hover:bg-gray-100 transition">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
                 
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuBtn" class="md:hidden text-gray-700 focus:outline-none">
@@ -65,10 +138,9 @@
                     <a href="#portfolio" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Portfolio</a>
                     <a href="#pricing" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Harga</a>
                     <a href="#faq" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">FAQ</a>
-                    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" 
-                       class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition text-center">
-                        WhatsApp
-                    </a>
+                    <button id="mobileDarkModeToggle" class="flex items-center justify-between text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">
+                        <div id="mobileDarkModeIcon"></div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -91,15 +163,38 @@
                         <br><br>
                         <span class="font-bold">Hubungi kami sekarang</span> dan wujudkan website impian Anda!
                     </p>
-                    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" 
-                       class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition hover-scale">
-                        Pesan Sekarang via WhatsApp
-                    </a>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                        <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Mohon%20informasi%20lebih%20lanjut.%20Terima%20kasih." 
+                           class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition hover-scale text-center">
+                            Pesan Sekarang via WhatsApp
+                        </a>
+                        
+                        <!-- Social Media Icons -->
+                        <div class="flex gap-3 justify-center sm:justify-start">
+                            <a href="mailto:codeta2002@gmail.com" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition hover-scale" title="Email">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition hover-scale" title="Instagram">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition hover-scale" title="TikTok">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="md:w-1/2">
-                    <img src="https://illustrations.popsy.co/amber/web-design.svg" 
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/web-development-illustration-download-in-svg-png-gif-file-formats--website-designer-coding-programming-pack-design-illustrations-4185595.png?f=webp" 
                          alt="Website Development" 
-                         class="rounded-lg">
+                         class="rounded-lg w-full">
                 </div>
             </div>
         </div>
@@ -137,11 +232,7 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Desain UI/UX</h3>
                     <p class="text-gray-600">Desain antarmuka yang user-friendly dan estetik untuk website Anda.</p>
                 </div>
-                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover-scale">
-                    <div class="text-4xl mb-4">🔧</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Maintenance Website</h3>
-                    <p class="text-gray-600">Layanan perawatan dan update website agar tetap optimal dan aman.</p>
-                </div>
+
             </div>
         </div>
     </section>
@@ -174,13 +265,7 @@
                         <p class="text-gray-600">Tampilan optimal di semua perangkat, dari desktop hingga smartphone.</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-4">
-                    <div class="text-3xl">🔄</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Gratis Revisi (1-2x)</h3>
-                        <p class="text-gray-600">Kami pastikan website sesuai keinginan Anda dengan revisi gratis.</p>
-                    </div>
-                </div>
+
                 <div class="flex items-start space-x-4">
                     <div class="text-3xl">🛡️</div>
                     <div>
@@ -282,7 +367,7 @@
                 <p class="text-lg text-gray-600 mb-2">🎉 <span class="font-bold text-blue-600">Paket Promo Tersedia!</span></p>
                 <p class="text-gray-600">Segera hubungi admin untuk mendapatkan harga promo spesial</p>
                 <p class="text-gray-600">Atau ingin <u><b>REQUEST</b></u> harga 😊</p>
-                <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20tanya%20paket%20promo" 
+                <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20ingin%20menanyakan%20informasi%20mengenai%20paket%20promo%20yang%20tersedia.%20Terima%20kasih." 
                    class="inline-block mt-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:from-orange-600 hover:to-red-600 transition font-semibold">
                     Tanya Promo Sekarang
                 </a>
@@ -320,7 +405,7 @@
                             <span class="text-gray-600">Support 1 Bulan</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20pesan%20paket%20Basic" 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Basic.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
@@ -369,7 +454,7 @@
                             <span class="text-gray-600">SEO Basic</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20pesan%20paket%20Standard" 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Standard.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
@@ -419,7 +504,7 @@
                             <span class="text-gray-600">Database & Backend</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20pesan%20paket%20Premium" 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Premium.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
@@ -623,7 +708,7 @@
             <p class="text-xl mb-8">
                 Konsultasi Gratis! Hubungi kami sekarang dan wujudkan website profesional untuk bisnis Anda.
             </p>
-            <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" 
+            <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20ingin%20berkonsultasi%20mengenai%20pembuatan%20website.%20Mohon%20informasi%20lebih%20lanjut.%20Terima%20kasih." 
                class="inline-block bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover-scale">
                 Hubungi via WhatsApp
             </a>
@@ -664,7 +749,7 @@
                         <li><a href="mailto:codeta2002@gmail.com?subject=Inquiry%20Website%20Code%20Ta&body=Halo%20Code%20Ta,%20saya%20ingin%20bertanya%20tentang%20jasa%20pembuatan%20website" class="text-gray-400 hover:text-white transition">Email</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition">TikTok</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Instagram</a></li>
-                        <li><a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" class="text-gray-400 hover:text-white transition">WhatsApp</a></li>
+                        <li><a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20ingin%20menghubungi%20Anda.%20Terima%20kasih." class="text-gray-400 hover:text-white transition">WhatsApp</a></li>
                     </ul>
                 </div>
             </div>
@@ -675,7 +760,7 @@
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/6285150762029?text=Halo%20saya%20ingin%20membuat%20website" 
+    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Mohon%20informasi%20lebih%2
        class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg hover:bg-green-600 transition hover-scale z-50">
         💬
     </a>
