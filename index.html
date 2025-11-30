@@ -184,9 +184,127 @@
                 font-size: 2.5rem;
             }
         }
+        
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            z-index: 1000;
+            border: none;
+        }
+        
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        #backToTop:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6);
+        }
+        
+        #backToTop svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Responsive Back to Top for Desktop */
+        @media (min-width: 768px) {
+            #backToTop {
+                bottom: 30px;
+                right: 30px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            #backToTop svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        
+        /* Mobile Menu Improvements */
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        #mobileMenu:not(.hidden) {
+            max-height: 500px;
+        }
+        
+        /* Scroll Margin for Sections - Rapat ke navbar tanpa space */
+        section[id] {
+            scroll-margin-top: 88px;
+            margin-top: 0 !important;
+            padding-top: 4rem; /* Default padding */
+        }
+        
+        /* Hero section khusus - sudah ada padding sendiri */
+        #home {
+            margin-top: 0 !important;
+            padding-top: 6rem !important; /* pt-24 */
+        }
+        
+        /* Adjust for tablet */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            section[id] {
+                scroll-margin-top: 80px;
+            }
+        }
+        
+        /* Adjust for mobile - MAKSIMAL RAPAT! */
+        @media (max-width: 768px) {
+            section[id] {
+                scroll-margin-top: 52px; /* Maksimal rapat */
+                padding-top: 4rem !important; /* 64px - minimal */
+            }
+            
+            #home {
+                padding-top: 5rem !important; /* 80px */
+            }
+            
+            /* Navbar mobile lebih compact */
+            nav .container {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+        }
+        
+        /* Extra small mobile */
+        @media (max-width: 480px) {
+            section[id] {
+                scroll-margin-top: 50px; /* Maksimal rapat */
+                padding-top: 3.75rem !important; /* 60px - minimal */
+            }
+            
+            #home {
+                padding-top: 4.75rem !important; /* 76px */
+            }
+        }
+        
+        /* Pastikan navbar tidak ada gap dengan konten */
+        nav {
+            margin-bottom: 0 !important;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50"></body>
     <!-- Loading Screen -->
     <div id="loadingScreen">
         <img src="logo.png" alt="Code Ta Logo" class="loader-logo">
@@ -196,12 +314,13 @@
 
     <!-- Navigation -->
     <nav class="bg-white shadow-md fixed w-full top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
+        <div class="container mx-auto px-4 py-5">
             <div class="flex justify-between items-center">
                 <img src="logo 2.png" alt="Code Ta Logo" class="h-5 sm:h-6 md:h-8">
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition">Home</a>
                     <a href="#layanan" class="text-gray-700 hover:text-blue-600 transition">Layanan</a>
                     <a href="#keunggulan" class="text-gray-700 hover:text-blue-600 transition">Keunggulan</a>
                     <a href="#portfolio" class="text-gray-700 hover:text-blue-600 transition">Portfolio</a>
@@ -209,12 +328,26 @@
                     <a href="#faq" class="text-gray-700 hover:text-blue-600 transition">FAQ</a>
                 </div>
                 
-                <!-- Dark Mode Toggle -->
-                <button id="darkModeToggle" class="hidden md:inline-block p-2 rounded-full hover:bg-gray-100 transition">
-                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                </button>
+                <!-- Language & Dark Mode Toggle -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Language Switcher -->
+                    <div class="flex items-center space-x-2 text-sm">
+                        <button id="langIndo" class="lang-btn text-blue-600 font-semibold hover:text-blue-700 transition">
+                            Indo
+                        </button>
+                        <span class="text-gray-400">|</span>
+                        <button id="langEnglish" class="lang-btn text-gray-500 hover:text-blue-600 transition">
+                            English
+                        </button>
+                    </div>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-100 transition">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
                 
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuBtn" class="md:hidden text-gray-700 focus:outline-none">
@@ -227,12 +360,29 @@
             <!-- Mobile Menu -->
             <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
                 <div class="flex flex-col space-y-3">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Home</a>
                     <a href="#layanan" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Layanan</a>
                     <a href="#keunggulan" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Keunggulan</a>
                     <a href="#portfolio" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Portfolio</a>
                     <a href="#pricing" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">Harga</a>
                     <a href="#faq" class="text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">FAQ</a>
+                    
+                    <!-- Mobile Language Switcher -->
+                    <div class="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span class="text-gray-700">Bahasa:</span>
+                        <div class="flex items-center space-x-2 text-sm">
+                            <button id="mobileLangIndo" class="mobile-lang-btn text-blue-600 font-semibold">
+                                Indo
+                            </button>
+                            <span class="text-gray-400">|</span>
+                            <button id="mobileLangEnglish" class="mobile-lang-btn text-gray-500">
+                                English
+                            </button>
+                        </div>
+                    </div>
+                    
                     <button id="mobileDarkModeToggle" class="flex items-center justify-between text-gray-700 hover:text-blue-600 transition py-2 border-b border-gray-200">
+                        <span>Dark Mode</span>
                         <div id="mobileDarkModeIcon"></div>
                     </button>
                 </div>
@@ -241,16 +391,20 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section id="home" class="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 fade-in-up">
+                    <br>
                     <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
                         Jasa Pembuatan Website Profesional
                     </h1>
                     <p class="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed">
                         Bangun website profesional Anda hari ini bersama <span class="font-bold text-blue-600">Code Ta</span> — <span class="font-bold">KODE nya KITA Bersama</span>. 
                         Kami siap membantu mewujudkan website <span class="font-semibold">modern, cepat, dan terjangkau</span> untuk bisnis Anda. 
+                        <br><br>
+                        Tidak hanya website, kami juga menyediakan <span class="font-bold text-purple-600">Jasa Desain Grafis</span> untuk kebutuhan branding Anda! 
+                        Mulai dari <span class="font-semibold">desain logo, banner, pamflet, hingga sablon kaos</span> — semua dikerjakan dengan <span class="font-semibold">kreatif dan profesional</span>.
                         <br><br>
                         Jangan tunda lagi, konsultasi <span class="font-bold text-orange-600">GRATIS</span> hanya dengan sekali klik! 
                         Mulai dari ide hingga website Anda online, <span class="font-semibold">semua bisa kami tangani tanpa ribet</span>.
@@ -326,6 +480,11 @@
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Desain UI/UX</h3>
                     <p class="text-gray-600">Desain antarmuka yang user-friendly dan estetik untuk website Anda.</p>
                 </div>
+                <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover-scale">
+                    <div class="text-4xl mb-4">🖌️</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Desain Grafis</h3>
+                    <p class="text-gray-600">Melayani desain logo, banner dan pamflet, sablon kaos, spanduk untuk kebutuhan branding Anda.</p>
+                </div>
 
             </div>
         </div>
@@ -374,6 +533,13 @@
                         <p class="text-gray-600">Bonus domain dan hosting untuk paket tertentu (syarat & ketentuan berlaku).</p>
                     </div>
                 </div>
+                <div class="flex items-start space-x-4">
+                    <div class="text-3xl">🎨</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Desain Kreatif & Profesional</h3>
+                        <p class="text-gray-600">Tim desainer berpengalaman siap mewujudkan identitas visual brand Anda dengan hasil berkualitas tinggi.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -382,69 +548,85 @@
     <section id="portfolio" class="py-16 bg-white overflow-hidden">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-                Portfolio Kami
+                Portfolio Kami 
             </h2>
-            <div id="portfolioCarousel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Coming Soon Items -->
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">🚀</span>
+            
+            <!-- Portfolio Web -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="text-3xl mr-3">💻</span>
+                    Portfolio Web
+                </h3>
+                <div id="portfolioCarousel" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">🚀</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">E-Commerce Store</h3>
+                            <p class="text-gray-600 mb-4">Toko online dengan sistem pembayaran terintegrasi.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">E-Commerce Store</h3>
-                        <p class="text-gray-600 mb-4">Toko online dengan sistem pembayaran terintegrasi.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">📱</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Mobile App Landing</h3>
+                            <p class="text-gray-600 mb-4">Landing page untuk promosi aplikasi mobile.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">📱</span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Mobile App Landing</h3>
-                        <p class="text-gray-600 mb-4">Landing page untuk promosi aplikasi mobile.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">🏨</span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Hotel Booking System</h3>
-                        <p class="text-gray-600 mb-4">Sistem reservasi hotel dengan dashboard admin.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
-                    </div>
-                </div>
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">📰</span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">News Portal</h3>
-                        <p class="text-gray-600 mb-4">Portal berita dengan sistem CMS lengkap.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">🏨</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Hotel Booking System</h3>
+                            <p class="text-gray-600 mb-4">Sistem reservasi hotel dengan dashboard admin.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">🎓</span>
+            </div>
+            
+            <!-- Portfolio Desain -->
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="text-3xl mr-3">🎨</span>
+                    Portfolio Desain
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">🖼️</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Logo Branding</h3>
+                            <p class="text-gray-600 mb-4">Desain logo profesional untuk identitas brand.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">School Management</h3>
-                        <p class="text-gray-600 mb-4">Sistem manajemen sekolah dan akademik.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">📋</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Banner & Pamflet</h3>
+                            <p class="text-gray-600 mb-4">Desain promosi untuk media cetak dan digital.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
-                </div>
-                <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
-                    <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span class="text-4xl">💪</span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Fitness Tracker</h3>
-                        <p class="text-gray-600 mb-4">Aplikasi tracking fitness dan workout.</p>
-                        <span class="text-blue-600 font-semibold">Coming Soon</span>
+                    <div class="bg-gray-100 rounded-lg shadow-lg overflow-hidden">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <span class="text-4xl">👕</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Sablon Kaos</h3>
+                            <p class="text-gray-600 mb-4">Desain custom untuk sablon kaos dan merchandise.</p>
+                            <span class="text-blue-600 font-semibold">Coming Soon</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -457,7 +639,7 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
                 Paket Harga
             </h2>
-            <div class="text-center mb-8">
+            <div class="text-center mb-12">
                 <p class="text-lg text-gray-600 mb-2">🎉 <span class="font-bold text-blue-600">Paket Promo Tersedia!</span></p>
                 <p class="text-gray-600">Segera hubungi admin untuk mendapatkan harga promo spesial</p>
                 <p class="text-gray-600">Atau ingin <u><b>REQUEST</b></u> harga 😊</p>
@@ -466,7 +648,14 @@
                     Tanya Promo Sekarang
                 </a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Paket Website -->
+            <div class="mb-16">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 flex items-center">
+                    <span class="text-3xl mr-3">💻</span>
+                    Paket Website
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Basic Package -->
                 <div class="bg-white rounded-lg shadow-lg p-8 hover-scale">
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">Basic</h3>
@@ -499,7 +688,7 @@
                             <span class="text-gray-600">Support 1 Bulan</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Basic.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20*Paket%20Basic*%20(Rp%201,5%20Juta)%20untuk%20Landing%20Page%20/%20UMKM.%20Mohon%20informasi%20lebih%20detail%20mengenai:%0A-%20Proses%20pemesanan%0A-%20Timeline%20pengerjaan%0A-%20Metode%20pembayaran%0A%0ATerima%20kasih!" 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
@@ -548,7 +737,7 @@
                             <span class="text-gray-600">SEO Basic</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Standard.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20*Paket%20Standard*%20(Rp%203%20Juta)%20untuk%20Company%20Profile%20/%20Portfolio.%20Mohon%20informasi%20lebih%20detail%20mengenai:%0A-%20Proses%20pemesanan%0A-%20Timeline%20pengerjaan%0A-%20Metode%20pembayaran%0A-%20Bonus%20domain%20.com%0A%0ATerima%20kasih!" 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
@@ -598,10 +787,100 @@
                             <span class="text-gray-600">Database & Backend</span>
                         </li>
                     </ul>
-                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20Paket%20Premium.%20Mohon%20informasi%20lebih%20detail%20dan%20proses%20pemesanannya.%20Terima%20kasih." 
+                    <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20*Paket%20Premium*%20(Rp%205%20Juta+)%20untuk%20Web%20App%20Custom.%20Mohon%20informasi%20lebih%20detail%20mengenai:%0A-%20Konsultasi%20kebutuhan%20fitur%0A-%20Estimasi%20harga%20final%0A-%20Timeline%20pengerjaan%0A-%20Metode%20pembayaran%0A-%20Bonus%20domain%20&%20hosting%0A%0ATerima%20kasih!" 
                        class="block text-center bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Pilih Paket
                     </a>
+                </div>
+            </div>
+            <br> 
+            <br> 
+            <br>
+            <!-- Paket Desain Grafis -->
+            <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 flex items-center justify-center">
+                    <span class="text-3xl mr-3">🎨</span>
+                    Paket Desain Grafis
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- Paket Desain Basic -->
+                    <div class="bg-white rounded-lg shadow-lg p-8 hover-scale">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Desain Basic</h3>
+                        <div class="text-4xl font-bold text-purple-600 mb-6">
+                            Coming Soon
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Desain Logo (2 Konsep)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Banner / Pamflet (1 Desain)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">File PNG & JPG</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Revisi 2x</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Pengerjaan 3-5 Hari</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20*Paket%20Desain%20Basic*%20untuk%20Logo%20&%20Banner.%20Mohon%20informasi%20mengenai:%0A-%20Harga%20paket%0A-%20Proses%20desain%0A-%20Timeline%20pengerjaan%0A-%20Format%20file%20yang%20diberikan%0A-%20Jumlah%20revisi%0A%0ATerima%20kasih!" 
+                           class="block text-center bg-purple-600 text-white px-6 py-3 rounded-full hover:bg-purple-700 transition">
+                            Tanya Harga
+                        </a>
+                    </div>
+                    
+                    <!-- Paket Desain Premium -->
+                    <div class="bg-white rounded-lg shadow-lg p-8 border-4 border-purple-600 hover-scale relative">
+                        <div class="absolute top-0 right-0 bg-purple-600 text-white px-4 py-1 rounded-bl-lg text-sm font-semibold">
+                            REKOMENDASI
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Desain Premium</h3>
+                        <div class="text-4xl font-bold text-purple-600 mb-6">
+                            Coming Soon
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Desain Logo (5 Konsep)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Banner, Pamflet, Spanduk</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Desain Sablon Kaos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">File PNG, JPG, PDF, AI</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Revisi Unlimited</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Pengerjaan 5-7 Hari</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-gray-600">Brand Guidelines</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/6285150762029?text=Halo%20Admin%20Code%20Ta,%20saya%20tertarik%20dengan%20*Paket%20Desain%20Premium*%20untuk%20Logo,%20Banner,%20&%20Sablon%20Kaos.%20Mohon%20informasi%20mengenai:%0A-%20Harga%20paket%0A-%20Proses%20desain%0A-%20Timeline%20pengerjaan%0A-%20Format%20file%20(PNG,%20JPG,%20PDF,%20AI)%0A-%20Brand%20Guidelines%0A-%20Revisi%20unlimited%0A%0ATerima%20kasih!" 
+                           class="block text-center bg-purple-600 text-white px-6 py-3 rounded-full hover:bg-purple-700 transition">
+                            Tanya Harga
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -613,60 +892,134 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
                 Proses Pengerjaan
             </h2>
-            <div class="max-w-4xl mx-auto">
-                <div class="space-y-8">
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            1
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+                <!-- Proses Web -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">💻</span>
+                        Proses Pembuatan Website
+                    </h3>
+                    <br>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Hubungi via WhatsApp</h4>
+                                <p class="text-sm text-gray-600">Ceritakan kebutuhan website Anda.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Hubungi via WhatsApp</h3>
-                            <p class="text-gray-600">Klik tombol WhatsApp dan ceritakan kebutuhan website Anda.</p>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Diskusi Kebutuhan</h4>
+                                <p class="text-sm text-gray-600">Diskusi detail fitur, desain, dan timeline.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Buat Mockup</h4>
+                                <p class="text-sm text-gray-600">Mockup desain untuk persetujuan Anda.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                4
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Development</h4>
+                                <p class="text-sm text-gray-600">Tim developer mulai coding website.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                5
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Revisi</h4>
+                                <p class="text-sm text-gray-600">Revisi sesuai paket yang dipilih.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                                6
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Website Online</h4>
+                                <p class="text-sm text-gray-600">Website siap diakses publik!</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            2
+                </div>
+                
+                <!-- Proses Desain -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">🎨</span>
+                        Proses Desain Grafis
+                    </h3>
+                    <br>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Konsultasi Desain</h4>
+                                <p class="text-sm text-gray-600">Sampaikan konsep dan ide desain Anda.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Diskusi Kebutuhan</h3>
-                            <p class="text-gray-600">Tim kami akan berdiskusi detail tentang fitur, desain, dan timeline.</p>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Brief & Riset</h4>
+                                <p class="text-sm text-gray-600">Riset target audience dan kompetitor.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            3
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Sketsa Konsep</h4>
+                                <p class="text-sm text-gray-600">Buat sketsa awal untuk approval.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Buat Desain</h3>
-                            <p class="text-gray-600">Kami membuat mockup desain untuk persetujuan Anda.</p>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                4
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Desain Final</h4>
+                                <p class="text-sm text-gray-600">Eksekusi desain dengan detail lengkap.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            4
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                5
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Revisi</h4>
+                                <p class="text-sm text-gray-600">Penyesuaian sesuai feedback Anda.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Pengerjaan</h3>
-                            <p class="text-gray-600">Tim developer mulai mengerjakan website sesuai desain yang disetujui.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            5
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Revisi</h3>
-                            <p class="text-gray-600">Anda dapat meminta revisi sesuai paket yang dipilih.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
-                            6
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Website Online</h3>
-                            <p class="text-gray-600">Website Anda siap online dan dapat diakses oleh publik!</p>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0 w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+                                6
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">File Siap Pakai</h4>
+                                <p class="text-sm text-gray-600">Terima file dalam berbagai format!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -852,6 +1205,13 @@
             </div>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Kembali ke Atas">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
 
     <script src="script.js"></script>
 </body>
