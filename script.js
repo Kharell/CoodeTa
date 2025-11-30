@@ -1,3 +1,18 @@
+// Loading Screen Animation
+window.addEventListener('load', function() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    
+    // Hide loading screen after 3 seconds
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+        
+        // Remove from DOM after transition
+        setTimeout(() => {
+            loadingScreen.remove();
+        }, 500);
+    }, 3000);
+});
+
 // FAQ Toggle Function
 function toggleFAQ(id) {
     const answer = document.getElementById('answer-' + id);
